@@ -9,13 +9,15 @@
 
 ## v1.1.3.0 (dev)
 
+* Fixed bug in damage rolling in certain circumstances
+
 ## v1.1.2.2 (latest)
 
 * Confirmed dnd5e 3.3.0 compatibility
 * #59 Fixed descriptions on items to use the new editor and updated save/load code for same
 * #62 Fixed some bugs around damage rolling by updating to the newer rollConfigs format
-* Fixed bug with shortcoders 
-* Fix with max attribute breaking TST count
+* Fixed bug with shortcodes 
+* #60 Fix with max attribute breaking TST count
 
 ## v1.1.1.3
 
