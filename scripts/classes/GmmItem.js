@@ -65,7 +65,7 @@ const GmmItem = (function () {
             if (this.getSheetId() == `${GMM_MODULE_TITLE}.ActionSheet` && this.isOwnedByGmmMonster()) {
                 const gmmMonster = this.getOwningGmmMonster();
                 this.system.damage.parts = this.system.damage.parts.map((x) =>
-                    (gmmMonster) ? Shortcoder.replaceShortcodesAndAddDamageTypeDamageObject(x[0], gmmMonster, x[1]) : x[0]
+                    (gmmMonster) ? Shortcoder.replaceShortcodesAndAddDamageTypeDamageObject(x[0], gmmMonster, x[1], true) : x[0]
                 );
                 this.system._source.description = this.system.description;
             }
@@ -75,7 +75,7 @@ const GmmItem = (function () {
             if (this.getSheetId() == `${GMM_MODULE_TITLE}.ActionSheet` && this.isOwnedByGmmMonster()) {
                 const gmmMonster = this.getOwningGmmMonster();
                 this.system.damage.parts = this.system.damage.parts.map((x) =>
-                    (gmmMonster) ? Shortcoder.replaceShortcodesAndAddDamageTypeDamageObject(x[0], gmmMonster, x[1]) : x[0]
+                    (gmmMonster) ? Shortcoder.replaceShortcodesAndAddDamageTypeDamageObject(x[0], gmmMonster, x[1], true) : x[0]
                 );
                 this.system._source.description = this.system.description;
             }
@@ -157,7 +157,7 @@ const GmmItem = (function () {
 
         if (this.hasDamage) {
             const damages = this.system.damage.parts.map((x) => {
-                let damage = (rollData && gmmMonster) ? simplifyRollFormula(Shortcoder.replaceShortcodes(x[0], gmmMonster), rollData).trim() : x[0];
+                let damage = (rollData && gmmMonster) ? simplifyRollFormula(Shortcoder.replaceShortcodes(x[0], gmmMonster, true), rollData).trim() : x[0];
                 return `${damage}${x[1] ? ` ${game.i18n.format(`gmm.common.damage.${x[1]}`).toLowerCase()}` : ``} damage`;
             });
             if ((itemData.consume?.type === 'ammo') && !!this.actor?.items) {
@@ -168,7 +168,7 @@ const GmmItem = (function () {
                     const ammoIsTypeConsumable = (ammoItemData.type === "consumable") && (ammoItemData.consumableType === "ammo")
                     if (ammoCanBeConsumed && ammoIsTypeConsumable) {
                         damages.push(...ammoItemData.damage.parts.map(x => {
-                            let damage = gmmMonster ? simplifyRollFormula(Shortcoder.replaceShortcodes(x[0], gmmMonster), rollData).trim() : x[0];
+                            let damage = gmmMonster ? simplifyRollFormula(Shortcoder.replaceShortcodes(x[0], gmmMonster), rollData, true).trim() : x[0];
                             return `${damage}${x[1] ? ` ${game.i18n.format(`gmm.common.damage.${x[1]}`).toLowerCase()}` : ``} damage`;
                         }));
                     }
@@ -188,11 +188,11 @@ const GmmItem = (function () {
         }
 
         if (this.isVersatile) {
-            labels.damage_versatile = `${gmmMonster ? Shortcoder.replaceShortcodes(this.system.damage.versatile, gmmMonster) : this.system.damage.versatile} damage`;
+            labels.damage_versatile = `${gmmMonster ? Shortcoder.replaceShortcodes(this.system.damage.versatile, gmmMonster, true) : this.system.damage.versatile} damage`;
         }
 
         if (this.system.formula) {
-            labels.damage_miss = `${gmmMonster ? Shortcoder.replaceShortcodes(this.system.formula, gmmMonster) : this.system.formula} damage`;
+            labels.damage_miss = `${gmmMonster ? Shortcoder.replaceShortcodes(this.system.formula, gmmMonster, true) : this.system.formula} damage`;
         }
 
         labels.bpRarity = this.flags.gmm?.blueprint.data.rarity || "";
@@ -507,10 +507,10 @@ const GmmItem = (function () {
         // Get roll data
         const gmmMonster = item.getOwningGmmMonster();
         const parts = itemData.damage.parts.map((x) =>
-            (gmmMonster) ? Shortcoder.replaceShortcodesAndAddDamageType(x[0], gmmMonster, x[1]) : x[0]
+            (gmmMonster) ? Shortcoder.replaceShortcodesAndAddDamageType(x[0], gmmMonster, x[1], true) : x[0]
         );
         const properties = itemData.properties ? Array.from(itemData.properties).filter(p => CONFIG.DND5E.itemProperties[p]?.isPhysical) : [];
-        const rollConfigs = itemData.damage.parts.map(([formula, type]) => ({ parts: [(gmmMonster) ? Shortcoder.replaceShortcodes(formula, gmmMonster) : formula], type, properties }));
+        const rollConfigs = itemData.damage.parts.map(([formula, type]) => ({ parts: [(gmmMonster) ? Shortcoder.replaceShortcodes(formula, gmmMonster, true) : formula], type, properties }));
         const rollData = item.getRollData();
 
         // Configure the damage roll

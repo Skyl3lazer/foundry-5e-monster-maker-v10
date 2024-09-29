@@ -62,6 +62,18 @@ const CompatibilityHelpers = (function () {
 			}
 		}
 	}
+	function duplicate(...args) {
+		if (game.version >= 12) {
+			return foundry.utils.duplicate(...args);
+		}
+		return duplicate(...args);
+	}
+	function expandObject(...args) {
+		if (game.version >= 12) {
+			return foundry.utils.expandObject(...args);
+		}
+		return expandObject(...args);
+	}
 	return {
 		hasProperty: hasProperty,
 		setProperty: setProperty,
@@ -70,7 +82,9 @@ const CompatibilityHelpers = (function () {
 		mergeObject: mergeObject,
 		replaceFormulaData: replaceFormulaData,
 		weight: weight,
-		getEncumbranceMultiplier: getEncumbranceMultiplier
+		getEncumbranceMultiplier: getEncumbranceMultiplier,
+		duplicate: duplicate,
+		expandObject: expandObject
 	};
 })();
 export default CompatibilityHelpers;

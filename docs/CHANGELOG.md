@@ -9,6 +9,10 @@
 
 ## v1.1.3.1 (dev)
 
+* Added duplicate compatibilityhelper
+* Added version to lower bar for debugging purposes
+* Added missing compatibilityhelper call
+
 ## v1.1.2.3 (latest)
 
 * #69 Fixed a deprecation (an old one!) that was sneaking by and finally broke in dnd5e 3.3.1. It was preventing damage from being added or removed from scaling abilities.

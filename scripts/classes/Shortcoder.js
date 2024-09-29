@@ -27,7 +27,7 @@ const Shortcoder = (function () {
         { code: "name", data: "name", type: "string" }
     ];
     
-    function replaceShortcodes(text, monsterData) {
+    function replaceShortcodes(text, monsterData, isDamage = false) {
         if (!text) return "";
         if (!monsterData)
             return text;
@@ -37,7 +37,7 @@ const Shortcoder = (function () {
                     try {
                         let regex = new RegExp(`\\b${x.code}\\b`, 'gi');
                         if (regex.test(token)) {
-                            token = token.replace(regex, getProperty(monsterData, x.data));
+                            token = token.replace(regex, CompatibilityHelpers.getProperty(monsterData, x.data));
                             if (x.type && x.type === "string") {
                                 token = token.replace(/\[(.*?)\]/g, (token, t1) => t1);
                             }
@@ -52,17 +52,20 @@ const Shortcoder = (function () {
             } catch (e) {
                 console.error(e);
             }
+            //Indicates a problem with a damage shortcode, which needs to fail
+            if (isDamage && token.includes("["))
+                return "";
             return token;
         });
     }
 
-    function replaceShortcodesAndAddDamageType(text, monsterData, damageType) {
-        let replaceText = replaceShortcodes(text, monsterData);
+    function replaceShortcodesAndAddDamageType(text, monsterData, damageType, isDamage = false) {
+        let replaceText = replaceShortcodes(text, monsterData, isDamage);
         return replaceText.replace(/(\d[^\+\- ]*)[\+\- ]?/g, (token) => token.trim() + (damageType ? `[${damageType}]` : ""));
     }
 
-    function replaceShortcodesAndAddDamageTypeDamageObject(text, monsterData, damageType) {
-        let replaceText = replaceShortcodes(text, monsterData);
+    function replaceShortcodesAndAddDamageTypeDamageObject(text, monsterData, damageType, isDamage = false) {
+        let replaceText = replaceShortcodes(text, monsterData, isDamage);
         return [replaceText, damageType];
     }
 

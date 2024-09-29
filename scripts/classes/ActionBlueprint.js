@@ -72,8 +72,8 @@ const ActionBlueprint = (function () {
             }
             //Versatile damage
             if (CompatibilityHelpers.hasProperty(item.system, "damage.versatile")) {
-                setProperty(blueprintData, "attack.versatile.damage", (gmmMonster) ?
-                    Shortcoder.replaceShortcodes(item.system.damage?.versatile, gmmMonster)
+                CompatibilityHelpers.setProperty(blueprintData, "attack.versatile.damage", (gmmMonster) ?
+                    Shortcoder.replaceShortcodes(item.system.damage?.versatile, gmmMonster, true)
                     : item.system.damage?.versatile);
             } else {
                 CompatibilityHelpers.setProperty(blueprintData, "attack.versatile.damage", "");
@@ -81,7 +81,7 @@ const ActionBlueprint = (function () {
             //Miss damage
             if (CompatibilityHelpers.hasProperty(item.system, "formula")) {
                 CompatibilityHelpers.setProperty(blueprintData, "attack.miss.damage", (gmmMonster) ?
-                    Shortcoder.replaceShortcodes(item.system.formula, gmmMonster)
+                    Shortcoder.replaceShortcodes(item.system.formula, gmmMonster, true)
                     : item.system.formula);
             } else {
                 CompatibilityHelpers.setProperty(blueprintData, "attack.versatile.damage", "");
@@ -90,13 +90,13 @@ const ActionBlueprint = (function () {
             if (CompatibilityHelpers.hasProperty(item.system, "damage.parts")) {
                 CompatibilityHelpers.setProperty(blueprintData, "attack.hit.damage", item.system.damage?.parts.map((x) => {
                     return {
-                        formula: (gmmMonster) ? Shortcoder.replaceShortcodes(x[0], gmmMonster) : x[0],
+                        formula: (gmmMonster) ? Shortcoder.replaceShortcodes(x[0], gmmMonster, true) : x[0],
                         type: x[1]
                     };
                 }));
                 if (item.system.damage.parts[0]) {
-                    CompatibilityHelpers.setProperty(blueprintData, 'attack.damage.formula', (gmmMonster) ? Shortcoder.replaceShortcodes(item.system.damage?.parts[0][0], gmmMonster) : item.system.damage?.parts[0][0]);
-                    CompatibilityHelpers.setProperty(blueprintData, 'attack.damage.type', (gmmMonster) ? Shortcoder.replaceShortcodes(item.system.damage?.parts[0][1], gmmMonster) : item.system.damage?.parts[0][1]);
+                    CompatibilityHelpers.setProperty(blueprintData, 'attack.damage.formula', (gmmMonster) ? Shortcoder.replaceShortcodes(item.system.damage?.parts[0][0], gmmMonster, true) : item.system.damage?.parts[0][0]);
+                    CompatibilityHelpers.setProperty(blueprintData, 'attack.damage.type', (gmmMonster) ? Shortcoder.replaceShortcodes(item.system.damage?.parts[0][1], gmmMonster, true) : item.system.damage?.parts[0][1]);
                 }
             } else {
                 CompatibilityHelpers.setProperty(blueprintData, "attack.hit.damage", []);
