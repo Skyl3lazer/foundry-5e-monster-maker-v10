@@ -12,6 +12,7 @@
 * Added duplicate compatibilityhelper
 * Added version to lower bar for debugging purposes
 * Added missing compatibilityhelper call
+* #70 fixed a bug with incorrect shortcodes on dnd3.3
 
 ## v1.1.2.3 (latest)
 
